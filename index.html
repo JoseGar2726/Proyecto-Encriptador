@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <textarea id="palabraencriptar" placeholder="Ingrese el texto aqui" onkeypress = "return check(event)" ></textarea>
+    <img id = "logo" src = "Logo.png">
+    <div id = "rectangulo1">
+        <textarea id = "palabraencriptada" readonly = "true"></textarea>
+        <img id = "muneco" src = "Muneco.png">
+        <img id = "frame5" src = "Frame.png">
+        <button id="btncopiar">Copiar</button>
+    </div>
+    <div id="botones">
+    <div id="cajamensaje">
+        <img src="mensaje.png" id="mensaje">
+        <p>Solo letras minúsculas y acentos</p>
+    </div>
+    <button id = "btnencriptar">Encriptar</button>
+    <button id = "btndesencriptar">Desencriptar</button>
+    </div>
+</body>
+</html>
+
+
+<script>
+
+    var mensajeencriptado = document.getElementById('palabraencriptada');
+    mensajeencriptado.style.display = 'none';
+    var mensajeencriptar = document.getElementById("palabraencriptar").value;
+    var copiar = document.querySelector("#btncopiar");
+    copiar.style.display = 'none';
+
+    //Funcion ocultar elementos
+
+    function ocultarelementosencriptar(){
+
+        var mensajeencriptar = document.getElementById("palabraencriptar").value;
+
+        var mensajeencriptado = document.getElementById("palabraencriptada");
+
+        var imagen1 = document.getElementById('muneco');
+        var imagen2 = document.getElementById('frame5');
+        
+        if(mensajeencriptar == ""){
+            imagen1.style.display = 'inline';
+            imagen2.style.display = 'inline';
+            mensajeencriptado.style.display = 'none';
+            copiar.style.display = 'none';
+        }
+        else{
+            imagen1.style.display = 'none';
+            imagen2.style.display = 'none';
+            palabraencriptada.style.display = 'inline';
+            copiar.style.display = 'block';
+            encriptar()
+        }
+        
+    }
+    function ocultarelementosdesencriptar(){
+
+    var mensajeencriptado = document.getElementById("palabraencriptar").value;
+
+    var mensajeencriptar = document.getElementById("palabraencriptada");
+
+    var imagen1 = document.getElementById('muneco');
+    var imagen2 = document.getElementById('frame5');
+
+    if(mensajeencriptado == ""){
+        imagen1.style.display = 'inline';
+        imagen2.style.display = 'inline';
+        mensajeencriptar.style.display = 'none';
+        copiar.style.display = 'none';
+    }
+    else{
+        imagen1.style.display = 'none';
+        imagen2.style.display = 'none';
+        palabraencriptada.style.display = 'inline';
+        copiar.style.display = 'block';
+        desencriptar();
+    }
+}
+
+    //Funcion para encriptar y desencriptar
+
+    function encriptar(){
+        mensajeencriptar = document.getElementById("palabraencriptar").value;
+        mensajeencriptado = mensajeencriptar.replace(/e/gi, "enter").replace(/i/gi, "imes").replace(/a/gi, "ai").replace(/o/gi, "ober").replace(/u/gi, "ufat");
+        document.getElementById("palabraencriptada").value = mensajeencriptado;
+        document.getElementById("palabraencriptar").value = "";
+    }
+    function desencriptar(){
+        mensajeencriptado = document.getElementById("palabraencriptar").value;
+        mensajeencriptar = mensajeencriptado.replace(/enter/gi, "e").replace(/imes/gi, "i").replace(/ai/gi, "a").replace(/ober/gi, "o").replace(/ufat/gi, "u");
+        document.getElementById("palabraencriptada").value = mensajeencriptar;
+        document.getElementById("palabraencriptar").value = "";
+    }
+    
+    //Boton copiar
+
+    var copia = document.getElementById("palabraencriptada");
+    var copiar = document.getElementById("btncopiar");
+    copiar.addEventListener('click', function(e) {
+        copia.select();
+        try {
+            var successful = document.execCommand('copy');
+        } catch (err) {
+            
+        }
+    });
+   
+
+    //Boton encritar y desencriptar
+
+    var button = document.querySelector("#btnencriptar");
+    button.onclick = ocultarelementosencriptar;
+    var boton = document.querySelector("#btndesencriptar");
+    boton.onclick = ocultarelementosdesencriptar;
+
+    //Solo escribir minusculas y letras sin tildes
+    function check(e) {  
+        var tecla = (document.all) ? e.keyCode : e.which;
+
+        //Letras mayusculas
+       
+        if (tecla >= 1 && tecla <= 129) {
+            if(tecla >= 65 && tecla <= 90){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+</script>
